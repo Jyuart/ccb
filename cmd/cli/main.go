@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"github.com/jyuart/ccb/internal"
 )
 
@@ -11,8 +10,8 @@ func main() {
 	flag.Parse()
 
 	if *isPaste {
-		fmt.Println("Not implemented")
+		internal.Paste()
 	} else {
-		internal.SetCoolClipboard()
+		internal.Copy()
 	}
 }

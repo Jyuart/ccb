@@ -12,7 +12,28 @@ import (
 	"google.golang.org/api/option"
 )
 
-func SetCoolClipboard() {
+var nodePath = "ccb"
+
+func Paste() {
+	ctx := context.Background()
+	dbClient, err := getDbClient(ctx)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	dbRef := dbClient.NewRef(nodePath)
+
+	var clipboardContents string
+	err = dbRef.Get(ctx, &clipboardContents)
+	if err != nil {
+		fmt.Println("There was an error getting data from the db")
+		fmt.Println(err)
+	}
+
+	fmt.Println(clipboardContents)
+}
+
+func Copy() {
 	clipboardContents, err := getClipboardContents()
 	if err != nil {
 		fmt.Println(err)
@@ -24,8 +45,7 @@ func SetCoolClipboard() {
 		fmt.Println(err)
 	}
 
-	dbRef := dbClient.NewRef("ccb")
-
+	dbRef := dbClient.NewRef(nodePath)
 	
 	err = dbRef.Set(ctx, clipboardContents)
 	if err != nil {
